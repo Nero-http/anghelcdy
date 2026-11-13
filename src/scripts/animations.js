@@ -71,8 +71,6 @@ document.querySelectorAll("#two").forEach((two) => {
         ease: "back.out",
         scrollTrigger: {
             trigger: "#projects",
-            start: "top 80%",
-            end: "bottom 20%",
             toggleActions: "play none none reverse",
         },
     });
@@ -84,17 +82,12 @@ document.querySelectorAll("#two").forEach((two) => {
         ease: "none",
         scrollTrigger: {
             trigger: "body",
-            start: "top top",
-            end: "bottom bottom",
-            markers: true,
             scrub: true,
         },
     });
 
         ScrollTrigger.create({
             trigger: "#projects",
-            start: "top top",
-            end: "bottom 20%",
             pin: true,
             pinSpacing: true
     });
