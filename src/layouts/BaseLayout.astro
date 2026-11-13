@@ -1,6 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
-import Header from "../components/header.astro";
+import Header from "../components/Header.astro";
 import "../styles/global.css";
 const name = "Anghel Dy";
 const position = "Web Developer / Software Engineer";
@@ -12,12 +12,19 @@ const position = "Web Developer / Software Engineer";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="theme-color" content="#f4f0e8" />
 		<meta name="generator" content={Astro.generator} />
 		<title> {name} | {position} </title>
 	</head>
-	<body>
-        <Header />
+	<body class="bg-[#f4f0e8] text-[#171717] dark:bg-[#101010] dark:text-[#f4f0e8]">
+        <div id="progressBar" class="fixed top-0 left-0 z-50 h-1 w-full origin-left bg-[#eaff00]"></div>
+		<main id="home" class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+		<Header />
         <slot />
         <Footer />
+		<script>
+			import "../scripts/animations.js";
+		</script>
+		</main>
 	</body>
 </html>

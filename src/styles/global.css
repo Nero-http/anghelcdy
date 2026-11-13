@@ -1,3 +1,120 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * { @apply box-border; }
+
+  html { @apply scroll-smooth; }
+
+  body { font-family: Arial, Helvetica, sans-serif; }
+
+  a { @apply no-underline; }
+
+  button, input, textarea { font: inherit; }
+
+  button, a, input, textarea {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4;
+  }
+
+  button, a {
+    @apply focus-visible:outline-[#eaff00];
+  }
+
+  ::selection {
+    @apply bg-[#eaff00] text-[#171717];
+  }
+}
+
+@layer components {
+  .brutal-card {
+    @apply border-[3px] border-[#171717];
+    box-shadow: 6px 6px 0 #171717;
+  }
+
+  .brutal-card:hover {
+    box-shadow: 9px 9px 0 #171717;
+  }
+
+  .brutal-button,
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+      border-[3px] px-5 py-3 text-[13px] font-black
+      uppercase cursor-pointer;
+  }
+
+  .brutal-button {
+    @apply border-[#171717] bg-[#eaff00] text-[#171717];
+    box-shadow: 4px 4px 0 #171717;
+  }
+
+  .brutal-button:hover {
+    box-shadow: 1px 1px 0 #171717;
+  }
+
+  .btn-primary {
+    @apply border-[#171717] bg-[#eaff00] text-[#171717];
+    box-shadow: 4px 4px 0 #171717;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 1px 1px 0 #171717;
+  }
+
+  .brutal-input {
+    @apply block w-full rounded-none border-[3px]
+      border-[#171717] bg-[#f4f0e8] p-3
+      text-sm text-[#171717] placeholder:text-neutral-700
+      focus:outline-2 focus:outline-offset-2
+      focus:outline-[#171717];
+  }
+
+  .section-label {
+    @apply mb-2 text-xs font-black uppercase
+      tracking-[2px] text-[#171717] dark:text-[#eaff00];
+  }
+
+  .section-title {
+    @apply mb-8 text-5xl font-black uppercase
+      tracking-tighter sm:text-7xl;
+  }
+
+  .accent-text {
+    @apply text-[#171717] dark:text-[#eaff00];
+  }
+
+  .dark .brutal-card {
+    @apply border-[#f4f0e8];
+    box-shadow: 6px 6px 0 #eaff00;
+  }
+
+  .dark .brutal-card:hover {
+    box-shadow: 9px 9px 0 #eaff00;
+  }
+
+  .dark .brutal-button {
+    @apply border-[#f4f0e8] bg-[#101010] text-[#f4f0e8];
+    box-shadow: 4px 4px 0 #f4f0e8;
+  }
+
+  .dark .brutal-button:hover {
+    box-shadow: 1px 1px 0 #f4f0e8;
+  }
+
+  .dark .btn-primary {
+    @apply border-[#171717];
+    box-shadow: 4px 4px 0 #171717;
+  }
+
+  .dark .btn-primary:hover {
+    box-shadow: 1px 1px 0 #171717;
+  }
+
+  .dark .brutal-input {
+    @apply border-[#171717] bg-[#f4f0e8] text-[#171717];
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
