@@ -1,15 +1,16 @@
-<header id="header" class="mx-auto max-w-6xl px-5 pt-6 sm:px-8">
-    <nav class="flex flex-wrap items-center justify-between gap-4 border-b-[3px] border-[#171717] pb-5 dark:border-[#f4f0e8]"
+<header id="header" data-site-header
+  class="sticky top-0 z-40 border-b-[3px] border-black bg-[#f4f0e8] transition-colors duration-300 dark:border-white dark:bg-[#101010]">
+    <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4 transition-[padding] duration-300 sm:px-8"
       aria-label="Main navigation">
 
-      <a href="#home" class="text-xl font-black">
+      <a href="#home" class="text-xl font-black transition-colors duration-200 hover:text-neutral-600 dark:hover:text-[#eaff00]">
         @http.anghell<span class="accent-text">.</span>
       </a>
 
       <div class="flex flex-wrap items-center gap-4 text-xs font-black uppercase sm:gap-6">
-        <a href="#projects" class="hover:bg-[#eaff00] hover:text-[#171717]">Projects ↘</a>
-        <a href="#services" class="hover:bg-[#eaff00] hover:text-[#171717]">What I Do ↘</a>
-        <a href="#contact" class="hover:bg-[#eaff00] hover:text-[#171717]">Contact ↘</a>
+        <a href="#projects" class="transition-colors duration-200 hover:bg-[#eaff00] hover:text-[#171717]">Projects ↘</a>
+        <a href="#services" class="transition-colors duration-200 hover:bg-[#eaff00] hover:text-[#171717]">What I Do ↘</a>
+        <a href="#contact" class="transition-colors duration-200 hover:bg-[#eaff00] hover:text-[#171717]">Contact ↘</a>
 
         <button id="toggledark" type="button"
           class="btn-primary !px-3 !py-2"
@@ -20,9 +21,8 @@
 
         <button id="refresh" type="button"
           class="btn-primary !px-3 !py-2"
-          aria-label="Switch color theme"
-          aria-pressed="true">
-          Refresh ˚⟡˖
+          aria-label="Replay introduction animation">
+          Replay ↻
         </button>
       </div>
     </nav>

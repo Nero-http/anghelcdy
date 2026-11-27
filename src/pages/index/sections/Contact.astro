@@ -1,8 +1,8 @@
- <section id="contact"
-      class="scroll-mt-8 border-[3px] border-[#171717] bg-[#eaff00] p-6 text-[#171717] shadow-[6px_6px_0_#171717] sm:p-10">
+ <section id="contact" data-reveal-group
+       class="scroll-mt-24 border-[3px] border-[#171717] bg-[#eaff00] p-6 text-[#171717] shadow-[6px_6px_0_#171717] sm:p-10">
 
       <div class="grid gap-10 md:grid-cols-2">
-        <div>
+        <div data-reveal-item data-reveal-from="left">
           <p class="mb-4 text-xs font-black uppercase tracking-widest">03 / Get in touch</p>
           <h2 class="text-5xl font-black uppercase leading-[0.9] tracking-tighter sm:text-7xl">
             LET'S<br>MAKE<br>IT HAPPEN.
@@ -13,7 +13,7 @@
           </p>
         </div>
 
-        <form id="contactForm" class="space-y-5">
+        <form id="contactForm" data-reveal-item data-reveal-from="right" class="space-y-5">
           <div>
             <label for="name" class="mb-2 block text-sm font-black uppercase">Your name *</label>
             <input class="brutal-input" type="text" id="name" name="name"

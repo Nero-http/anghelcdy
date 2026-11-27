@@ -1,164 +1,246 @@
-
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerEffect({ name: "spin", defaults: { duration: 1 },
-  effect: (targets, config) => { return gsap.to(targets, { rotation: "+=360", duration: config.duration, 
-    ease: "power2.inOut", overwrite: "auto" }); }
-});
+gsap.registerPlugin(ScrollTrigger);
 
-  gsap.registerEffect({ name: "right", defaults: { duration: 0.3 },
-  effect: (targets, config) => { return gsap.to(targets, { scale: 1.02, duration: config.duration, 
-    ease: "power2.inOut", overwrite: "auto" }); }
-});
+function initializePage() {
+  const html = document.documentElement;
+  const header = document.querySelector("[data-site-header]");
+  const themeButton = document.querySelector("#toggledark");
+  const replayButton = document.querySelector("#refresh");
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const contactForm = document.querySelector("#contactForm");
+  const formStatus = document.querySelector("#formStatus");
+  const year = document.querySelector("#year");
+  const progressBar = document.querySelector("#progressBar");
 
-  gsap.registerEffect({ name: "left", defaults: { duration: 0.3 },
-  effect: (targets, config) => { return gsap.to(targets, { scale: 1, duration: config.duration, 
-    ease: "power2.inOut", overwrite: "auto" }); }
-});
+  function updateThemeColor() {
+    const isDark = html.classList.contains("dark");
 
-document.querySelectorAll("#work").forEach((work) => {
-  work.addEventListener("mouseenter", () => { gsap.effects.spin(work);}); 
-});
+    if (themeColor) {
+      themeColor.content = isDark ? "#101010" : "#f4f0e8";
+    }
 
-document.querySelectorAll("h1").forEach((h1) => {
-  h1.addEventListener("mouseenter", () => { gsap.effects.right(h1);});
+    themeButton?.setAttribute("aria-pressed", String(isDark));
+  }
 
-  h1.addEventListener("mouseleave", () => { gsap.effects.left(h1);});
-});
+  try {
+    const savedTheme = localStorage.getItem("portfolio-theme");
 
-document.querySelectorAll("#one").forEach((one) => {
-  one.addEventListener("mouseenter", () => { gsap.effects.right(one);});
+    if (savedTheme === "light") {
+      html.classList.remove("dark");
+    } else if (savedTheme === "dark") {
+      html.classList.add("dark");
+    }
+  } catch (error) {
+    // Theme switching remains available when storage is disabled.
+  }
 
-  one.addEventListener("mouseleave", () => { gsap.effects.left(one);});
-});
+  updateThemeColor();
 
-document.querySelectorAll("#two").forEach((two) => {
-  two.addEventListener("mouseenter", () => { gsap.effects.right(two);});
+  let introTimeline;
+  const motion = gsap.matchMedia();
+  const animationContext = gsap.context(() => {
+    motion.add("(prefers-reduced-motion: no-preference)", () => {
+      const heroItems = document.querySelectorAll("[data-hero-item]");
+      const heroAside = document.querySelector("[data-hero-aside]");
 
-  two.addEventListener("mouseleave", () => { gsap.effects.left(two);});
-});
+      introTimeline = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-  //Tween 
-    // console.log("Gsap ver", gsap.version); 
-    // gsap.to("h1", {rotation: 360, duration: 3}); 
-    // gsap.from("h1", {x: -160, opacity:0, duration: 1}); 
-    // gsap.fromTo("h1", {opacity: 0},{opacity: 1, duration: 3});
-
-  //Easing
-    // gsap.from("h1", {x: -160, opacity:0, duration: 1, ease: "back.out(2.5)"});
-    // gsap.from("#work", {y: -160, opacity:0, duration: 1, ease: "back.out(2.5)"});
-    // gsap.from("nav a", {y: -160, opacity:0, duration: 1, ease: "powe2.out", stagger: 0.3});
-    // gsap.from("button", {x: 160, opacity:0, duration: 1, ease: "back.out", stagger: 0.3});
-    // gsap.from("#box", {x: 160, opacity:0, duration: 1, ease: "back.out", stagger: 0.3});
-
-    // gsap.from("#work", {y: -160, opacity:0, duration: 0.3, ease: "back.out(2.5)"});
-
-    const tl = gsap.timeline ({defaults: {ease: "power2.out"}});
-      tl.from("h1", {x: -160, opacity:0, duration: 0.5, ease: "back.out(2.5)"})
-      tl.from("nav a", {y: -160, opacity:0, duration: 0.3, ease: "power2.out", stagger: 0.1})
-      tl.from("#toggledark", {rotation: 360, opacity:0, duration: 0.3, ease: "back.out", stagger: 0.1})
-      tl.from("#refresh", {x: 160, opacity:0, duration: 0.3, ease: "back.out", stagger: 0.1})
-      tl.from("#box", {x: 160, opacity:0, duration: 0.3, ease: "back.out", stagger: 0.1})
-      // tl.from("#work", {y: -160, opacity:0, duration: 0.3, ease: "back.out(2.5)"});
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.from ("#projects", {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "back.out",
-        scrollTrigger: {
-            trigger: "#projects",
-            toggleActions: "play none none reverse",
-        },
-    });
-
-    gsap.fromTo("#progressBar",
-    { scaleX: 0 },
-    {
-        scaleX: 1,
-        ease: "none",
-        scrollTrigger: {
-            trigger: "body",
-            scrub: true,
-        },
-    });
-
-        ScrollTrigger.create({
-            trigger: "#projects",
-            pin: true,
-            pinSpacing: true
-    });
-
-    (() => {
-      "use strict";
-
-      const html = document.documentElement;
-      const themeButton = document.querySelector("#toggledark");
-      const refreshButton = document.querySelector("#refresh");
-      const themeColor = document.querySelector('meta[name="theme-color"]');
-      const contactForm = document.querySelector("#contactForm");
-      const formStatus = document.querySelector("#formStatus");
-
-      function updateThemeColor() {
-        const isDark = html.classList.contains("dark");
-        themeColor.content = isDark ? "#101010" : "#f4f0e8";
-        themeButton.setAttribute("aria-pressed", String(isDark));
+      if (heroItems.length) {
+        introTimeline.from(heroItems, {
+          y: 30,
+          autoAlpha: 0,
+          filter: "blur(7px)",
+          duration: 0.8,
+          stagger: 0.13,
+          clearProps: "transform,filter",
+        });
       }
 
-      try {
-        const savedTheme = localStorage.getItem("portfolio-theme");
-
-        if (savedTheme === "light") {
-          html.classList.remove("dark");
-        } else if (savedTheme === "dark") {
-          html.classList.add("dark");
-        }
-      } catch (error) {
-        // Storage may be unavailable.
+      if (heroAside) {
+        introTimeline.from(
+          heroAside,
+          {
+            x: 28,
+            y: 12,
+            autoAlpha: 0,
+            filter: "blur(6px)",
+            duration: 0.9,
+            ease: "power3.out",
+            clearProps: "transform,filter",
+          },
+          "-=0.45",
+        );
       }
 
-      updateThemeColor();
+      document.querySelectorAll("[data-reveal-group]").forEach((group) => {
+        const headings = group.querySelectorAll("[data-reveal-heading]");
+        const items = group.querySelectorAll("[data-reveal-item]");
+        const visuals = group.querySelectorAll("[data-project-visual]");
 
-      themeButton.addEventListener("click", () => {
-        html.classList.toggle("dark");
-        gsap.from("#toggledark", {rotation: 360, opacity:0, duration: 0.3, ease: "back.out", stagger: 0.1})
-
-        try {
-          localStorage.setItem(
-            "portfolio-theme",
-            html.classList.contains("dark") ? "dark" : "light"
-          );
-        } catch (error) {
-          // Theme switching still works without storage.
-        }
-
-        updateThemeColor();
-      });
-
-      refreshButton.addEventListener("click", () => {
-      const tl = gsap.timeline ({default: {ease: "power2.out"}});
-        tl.from("h1", {x: -160, opacity:0, duration: 0.5, ease: "back.out(2.5)"})
-        tl.from("nav a", {y: -160, opacity:0, duration: 0.3, ease: "powe2.out", stagger: 0.1})
-        tl.from("#toggledark", {rotation: 360, opacity:0, duration: 0.5, ease: "back.out", stagger: 0.1})
-        tl.from("#box", {x: 160, opacity:0, duration: 0.3, ease: "back.out", stagger: 0.1})
-        tl.from("#work", {y: -160, opacity:0, duration: 0.3, ease: "back.out(2.5)"});
-      });
-
-      document.querySelector("#year").textContent =
-        new Date().getFullYear();
-
-      contactForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        if (!contactForm.checkValidity()) {
-          contactForm.reportValidity();
+        if (!headings.length && !items.length) {
           return;
         }
 
-        formStatus.textContent =
-          "Your information is valid. Connect a backend or email service to deliver your message.";
+        const reveal = gsap.timeline({
+          scrollTrigger: {
+            trigger: group,
+            start: "top 82%",
+            toggleActions: "play none none reverse",
+            invalidateOnRefresh: true,
+          },
+        });
+
+        if (headings.length) {
+          reveal.from(headings, {
+            y: 22,
+            autoAlpha: 0,
+            filter: "blur(5px)",
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power4.out",
+            clearProps: "transform,filter",
+          });
+        }
+
+        if (items.length) {
+          reveal.from(
+            items,
+            {
+              x: (index, item) => {
+                if (item.dataset.revealFrom === "left") return -30;
+                if (item.dataset.revealFrom === "right") return 30;
+                return 0;
+              },
+              y: (index, item) => (item.dataset.revealFrom === "up" ? 30 : 12),
+              scale: (index, item) => (item.matches(".project-card") ? 0.97 : 1),
+              autoAlpha: 0,
+              filter: "blur(5px)",
+              duration: 0.75,
+              stagger: 0.12,
+              ease: "power3.out",
+              clearProps: "transform,filter",
+            },
+            headings.length ? "-=0.22" : 0,
+          );
+        }
+
+        if (visuals.length) {
+          reveal.from(
+            visuals,
+            {
+              scale: 0.9,
+              autoAlpha: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+              clearProps: "transform",
+            },
+            "<0.18",
+          );
+        }
       });
-    })();
+
+      if (progressBar) {
+        gsap.fromTo(
+          progressBar,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.35,
+            },
+          },
+        );
+      }
+
+      return () => {
+        introTimeline = undefined;
+      };
+    });
+  });
+
+  function updateHeader() {
+    header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  }
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  function toggleTheme() {
+    html.classList.toggle("dark");
+
+    try {
+      localStorage.setItem(
+        "portfolio-theme",
+        html.classList.contains("dark") ? "dark" : "light",
+      );
+    } catch (error) {
+      // The current theme still applies when storage is disabled.
+    }
+
+    updateThemeColor();
+  }
+
+  function replayIntro() {
+    introTimeline?.restart();
+  }
+
+  themeButton?.addEventListener("click", toggleTheme);
+  replayButton?.addEventListener("click", replayIntro);
+
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
+  }
+
+  function validateContactForm(event) {
+    event.preventDefault();
+
+    if (!(contactForm instanceof HTMLFormElement)) {
+      return;
+    }
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    if (formStatus) {
+      formStatus.textContent =
+        "Your information is valid. Connect a backend or email service to deliver your message.";
+    }
+  }
+
+  contactForm?.addEventListener("submit", validateContactForm);
+
+  return () => {
+    animationContext.revert();
+    motion.revert();
+    window.removeEventListener("scroll", updateHeader);
+    themeButton?.removeEventListener("click", toggleTheme);
+    replayButton?.removeEventListener("click", replayIntro);
+    contactForm?.removeEventListener("submit", validateContactForm);
+  };
+}
+
+let pageCleanup;
+
+function handlePageLoad() {
+  if (!pageCleanup) {
+    pageCleanup = initializePage();
+  }
+}
+
+function handleBeforeSwap() {
+  pageCleanup?.();
+  pageCleanup = undefined;
+}
+
+document.addEventListener("astro:page-load", handlePageLoad);
+document.addEventListener("astro:before-swap", handleBeforeSwap);
+pageCleanup = initializePage();

@@ -5,7 +5,10 @@
 @layer base {
   * { @apply box-border; }
 
-  html { @apply scroll-smooth; }
+  html {
+    @apply scroll-smooth;
+    scroll-padding-top: 6rem;
+  }
 
   body { font-family: Arial, Helvetica, sans-serif; }
 
@@ -30,9 +33,12 @@
   .brutal-card {
     @apply border-[3px] border-[#171717];
     box-shadow: 6px 6px 0 #171717;
+    transition: transform 220ms ease, box-shadow 220ms ease;
   }
 
-  .brutal-card:hover {
+  .brutal-card:hover,
+  .brutal-card:focus-within {
+    transform: translateY(-3px);
     box-shadow: 9px 9px 0 #171717;
   }
 
@@ -41,6 +47,8 @@
     @apply inline-flex items-center justify-center gap-2
       border-[3px] px-5 py-3 text-[13px] font-black
       uppercase cursor-pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease,
+      background-color 180ms ease, color 180ms ease;
   }
 
   .brutal-button {
@@ -49,6 +57,7 @@
   }
 
   .brutal-button:hover {
+    transform: translate(2px, 2px);
     box-shadow: 1px 1px 0 #171717;
   }
 
@@ -58,7 +67,17 @@
   }
 
   .btn-primary:hover {
+    transform: translate(2px, 2px);
     box-shadow: 1px 1px 0 #171717;
+  }
+
+  .project-visual {
+    transition: transform 300ms ease;
+  }
+
+  .project-card:hover .project-visual,
+  .project-card:focus-within .project-visual {
+    transform: scale(1.015);
   }
 
   .brutal-input {
@@ -88,7 +107,8 @@
     box-shadow: 6px 6px 0 #eaff00;
   }
 
-  .dark .brutal-card:hover {
+  .dark .brutal-card:hover,
+  .dark .brutal-card:focus-within {
     box-shadow: 9px 9px 0 #eaff00;
   }
 
@@ -98,6 +118,7 @@
   }
 
   .dark .brutal-button:hover {
+    transform: translate(2px, 2px);
     box-shadow: 1px 1px 0 #f4f0e8;
   }
 
@@ -107,6 +128,7 @@
   }
 
   .dark .btn-primary:hover {
+    transform: translate(2px, 2px);
     box-shadow: 1px 1px 0 #171717;
   }
 
@@ -115,6 +137,32 @@
   }
 }
 
+#header.is-scrolled nav {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+    scroll-padding-top: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .brutal-card:hover,
+  .brutal-card:focus-within,
+  .brutal-button:hover,
+  .btn-primary:hover,
+  .project-card:hover .project-visual,
+  .project-card:focus-within .project-visual {
+    transform: none;
+  }
 }
