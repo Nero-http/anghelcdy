@@ -14,6 +14,15 @@ function initializePage() {
   const year = document.querySelector("#year");
   const progressBar = document.querySelector("#progressBar");
 
+  const contactResult = new URLSearchParams(window.location.search).get("contact");
+
+  if (formStatus && contactResult === "sent") {
+    formStatus.textContent = "Thanks for reaching out. Your message has been sent.";
+  } else if (formStatus && contactResult === "error") {
+    formStatus.textContent =
+      "We couldn't send your message. Please check the form and try again.";
+  }
+
   function updateThemeColor() {
     const isDark = html.classList.contains("dark");
 
@@ -198,7 +207,7 @@ function initializePage() {
     year.textContent = String(new Date().getFullYear());
   }
 
-  function validateContactForm(event) {
+  async function submitContactForm(event) {
     event.preventDefault();
 
     if (!(contactForm instanceof HTMLFormElement)) {
@@ -210,13 +219,65 @@ function initializePage() {
       return;
     }
 
+    const submitButton = contactForm.querySelector("#submitButton");
+    const originalButtonText = submitButton?.textContent ?? "";
+
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+
+    contactForm.setAttribute("aria-busy", "true");
+
     if (formStatus) {
-      formStatus.textContent =
-        "Your information is valid. Connect a backend or email service to deliver your message.";
+      formStatus.textContent = "Sending your message...";
+    }
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(contactForm),
+      });
+
+      if (response.redirected) {
+        window.location.assign(response.url);
+        return;
+      }
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        if (formStatus) {
+          formStatus.textContent =
+            result.message || "We couldn't send your message. Please try again.";
+        }
+        return;
+      }
+
+      if (formStatus) {
+        formStatus.textContent = result.message;
+      }
+
+      contactForm.reset();
+    } catch (error) {
+      console.error("Contact form submission failed:", error);
+
+      if (formStatus) {
+        formStatus.textContent =
+          "We couldn't send your message. Check your connection and try again.";
+      }
+    } finally {
+      contactForm.removeAttribute("aria-busy");
+
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
     }
   }
 
-  contactForm?.addEventListener("submit", validateContactForm);
+  contactForm?.addEventListener("submit", submitContactForm);
 
   return () => {
     animationContext.revert();
@@ -224,7 +285,7 @@ function initializePage() {
     window.removeEventListener("scroll", updateHeader);
     themeButton?.removeEventListener("click", toggleTheme);
     replayButton?.removeEventListener("click", replayIntro);
-    contactForm?.removeEventListener("submit", validateContactForm);
+    contactForm?.removeEventListener("submit", submitContactForm);
   };
 }
 

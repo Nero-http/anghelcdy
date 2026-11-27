@@ -1,0 +1,88 @@
+
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Message Failed | Anghel Dy</title>
+</head>
+
+<body class="bg-[#f4f0e8] text-[#171717] dark:bg-[#101010] dark:text-[#f4f0e8]">
+
+<main class="flex min-h-screen items-center justify-center bg-[#f4f0e8] px-5 py-8 dark:bg-[#101010] sm:px-8">
+
+    <section
+        aria-labelledby="error-title"
+        class="w-full max-w-xl border-[3px] border-[#171717] bg-[#eaff00] p-5 text-[#171717] shadow-[8px_8px_0_#171717] sm:p-8"
+        data-reveal-group
+    >
+
+        <div class="flex items-center justify-between gap-4 border-b-[3px] border-[#171717] pb-4">
+
+            <p class="text-xs font-black uppercase tracking-[2px]">
+                Message not delivered
+            </p>
+
+            <span
+                aria-label="Message sending failed"
+                class="flex h-9 w-9 shrink-0 items-center justify-center border-[3px] border-[#171717] bg-[#171717] text-xl font-black text-[#eaff00]"
+            >
+                !
+            </span>
+
+        </div>
+
+        <div class="py-7 sm:py-9" data-reveal-item data-reveal-from="left">
+
+            <p class="mb-3 text-xs font-black uppercase tracking-[2px]">
+                Something went wrong
+            </p>
+
+            <h1
+                id="error-title"
+                class="text-5xl font-black uppercase leading-[0.85] tracking-tighter sm:text-7xl md:text-8xl"
+            >
+                MESSAGE<br>
+                FAILED<span class="text-white">!</span>
+            </h1>
+
+            <p class="mt-6 max-w-lg border-l-[5px] border-[#171717] pl-4 text-base font-bold leading-relaxed">
+                Unfortunately, your message couldn't be sent.
+                Please try again in a moment. If the problem continues,
+                you can reach me through my other contact channels.
+            </p>
+
+            <a
+                href="/#contact"
+                class="btn-primary mt-6 inline-flex items-center justify-center gap-3"
+            >
+                <span aria-hidden="true">↻</span>
+                TRY AGAIN
+            </a>
+
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 border-t-[3px] border-[#171717] pt-4">
+
+            <p class="text-[10px] font-black uppercase tracking-widest">
+                Don't give up just yet.
+            </p>
+
+            <p class="text-xs font-black uppercase">
+                Submission failed !
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

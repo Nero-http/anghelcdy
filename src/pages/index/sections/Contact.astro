@@ -1,40 +1,87 @@
- <section id="contact" data-reveal-group
-       class="scroll-mt-24 border-[3px] border-[#171717] bg-[#eaff00] p-6 text-[#171717] shadow-[6px_6px_0_#171717] sm:p-10">
 
-      <div class="grid gap-10 md:grid-cols-2">
+<section id="contact" data-reveal-group
+    class="scroll-mt-24 border-[3px] border-[#171717] bg-[#eaff00] p-6 text-[#171717] shadow-[6px_6px_0_#171717] sm:p-10">
+
+    <div class="grid gap-10 md:grid-cols-2">
+
         <div data-reveal-item data-reveal-from="left">
-          <p class="mb-4 text-xs font-black uppercase tracking-widest">03 / Get in touch</p>
-          <h2 class="text-5xl font-black uppercase leading-[0.9] tracking-tighter sm:text-7xl">
-            LET'S<br>MAKE<br>IT HAPPEN.
-          </h2>
-          <p class="mt-6 font-bold leading-relaxed">
-            Have a website, system, or automation idea?
-            Let's discuss what we can build.
-          </p>
+            <p class="mb-4 text-xs font-black uppercase tracking-widest">
+                03 / Get in touch
+            </p>
+
+            <h2 class="text-5xl font-black uppercase leading-[0.9] tracking-tighter sm:text-7xl">
+                LET'S<br>MAKE<br>IT HAPPEN.
+            </h2>
+
+            <p class="mt-6 font-bold leading-relaxed">
+                Have a website, system, or automation idea?
+                Let's discuss what we can build.
+            </p>
         </div>
 
-        <form id="contactForm" data-reveal-item data-reveal-from="right" class="space-y-5">
-          <div>
-            <label for="name" class="mb-2 block text-sm font-black uppercase">Your name *</label>
-            <input class="brutal-input" type="text" id="name" name="name"
-              autocomplete="name" required maxlength="100" placeholder="YOUR NAME">
-          </div>
+        <form action="/api/contact" method="post" id="contactForm"
+            data-reveal-item data-reveal-from="right"
+            class="space-y-5">
 
-          <div>
-            <label for="email" class="mb-2 block text-sm font-black uppercase">Your email *</label>
-            <input class="brutal-input" type="email" id="email" name="email"
-              autocomplete="email" required maxlength="254" placeholder="YOU@EXAMPLE.COM">
-          </div>
+            <div>
+                <label for="name" class="mb-2 block text-sm font-black uppercase">
+                    Your name *
+                </label>
 
-          <div>
-            <label for="message" class="mb-2 block text-sm font-black uppercase">Your message *</label>
-            <textarea class="brutal-input" id="message" name="message"
-              rows="5" required maxlength="5000"
-              placeholder="TELL ME ABOUT YOUR IDEA"></textarea>
-          </div>
+                <input class="brutal-input" type="text" id="name" name="name"
+                    autocomplete="name" required maxlength="100"
+                    placeholder="YOUR NAME">
+            </div>
 
-          <button type="submit" class="btn-primary w-full">Validate Message ↗</button>
-          <p id="formStatus" class="text-sm font-bold" role="status" aria-live="polite"></p>
+            <div>
+                <label for="email" class="mb-2 block text-sm font-black uppercase">
+                    Your email *
+                </label>
+
+                <input class="brutal-input" type="email" id="email" name="email"
+                    autocomplete="email" required maxlength="254"
+                    placeholder="YOU@EXAMPLE.COM">
+            </div>
+
+            <div>
+                <label for="message" class="mb-2 block text-sm font-black uppercase">
+                    Your message *
+                </label>
+
+                <textarea class="brutal-input" id="message" name="message"
+                    rows="5" required maxlength="2000"
+                    placeholder="TELL ME ABOUT YOUR IDEA"></textarea>
+            </div>
+
+            <!-- Honeypot spam protection -->
+            <div class="honeypot" aria-hidden="true">
+                <label for="website">Leave this field empty</label>
+                <input type="text" id="website" name="website"
+                    tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" id="submitButton"
+                class="btn-primary w-full">
+                Send Message ↗
+            </button>
+
+            <p id="formStatus"
+                class="text-sm font-bold"
+                role="status"
+                aria-live="polite">
+            </p>
+
         </form>
-      </div>
-    </section>
+    </div>
+</section>
+
+<style>
+.honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+</style>
